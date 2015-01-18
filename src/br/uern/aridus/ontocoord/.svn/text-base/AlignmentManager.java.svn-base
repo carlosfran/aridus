@@ -1,0 +1,255 @@
+package br.uern.aridus.ontocoord;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.openrdf.query.Binding;
+import org.openrdf.query.BindingSet;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.query.QueryLanguage;
+import org.openrdf.query.TupleQuery;
+import org.openrdf.query.TupleQueryResult;
+import org.openrdf.repository.Repository;
+import org.openrdf.repository.RepositoryConnection;
+import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.http.HTTPRepository;
+import org.openrdf.rio.RDFFormat;
+import org.openrdf.rio.RDFParseException;
+
+public class AlignmentManager {
+
+	String serverURL = "http://localhost:8080/openrdf-sesame/";
+	String repositoryID = "alignkb";
+	String vocab = "http://knowledgeweb.semanticweb.org/heterogeneity/alignment#";
+	Repository myRepository;
+	RepositoryConnection con;
+
+	public AlignmentManager() throws RepositoryException {
+		myRepository = new HTTPRepository(serverURL + "repositories/"
+				+ repositoryID);
+		myRepository.initialize();
+		con = myRepository.getConnection();
+	}
+
+	public String checkOntoURI(String ontoURI){
+		String newURI = ontoURI;
+		if(ontoURI.endsWith("#")){
+			newURI = ontoURI.substring(0, ontoURI.length()-1);
+		}
+		return newURI;
+		
+	}
+	
+	public String getVocabTarget(String alignURI){
+		String queryMap = "PREFIX align: <"+vocab+"> \n" +
+				"PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> \n" +
+				"SELECT DISTINCT ?vocab\n" +
+				"WHERE{ <"+alignURI+"> align:onto2 ?vocab }";
+		
+//		System.out.println(queryMap);
+		
+		String vocab = "";
+		TupleQuery pQuery = null;
+		TupleQueryResult result = null;
+
+		try {
+			pQuery = con
+					.prepareTupleQuery(QueryLanguage.SPARQL, queryMap);
+			result = pQuery.evaluate();
+			
+			while (result.hasNext()) {
+				BindingSet set = result.next();
+				Binding b1 = set.getBinding("vocab");
+				vocab = b1.getValue().toString();
+			}
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return vocab;
+	}
+
+	public String[] getAlignments(String ontoURI) {
+		List<String> aligns = new java.util.ArrayList<String>();
+		
+		ontoURI = checkOntoURI(ontoURI);
+
+		String queryAlignList = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" +
+				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n" +
+				"PREFIX align: <"+ vocab + "> \n" +
+				"SELECT DISTINCT ?a \n" +
+				"WHERE{ \n" +
+				"	?a rdf:type align:Alignment .\n" +
+				"	?a align:onto1 <" + ontoURI + "> .\n" +
+				"	?a align:level \"0\" .\n" +
+				"	?a align:map ?m .\n" +
+				"	?m align:measure ?f .\n" +
+				"	FILTER(?f >= \"1.0\"^^xsd:float)\n" +
+				"}";
+		
+		System.out.println(queryAlignList);
+		TupleQuery pQuery = null;
+		TupleQueryResult result = null;
+
+		try {
+			pQuery = con
+					.prepareTupleQuery(QueryLanguage.SPARQL, queryAlignList);
+			result = pQuery.evaluate();
+
+			while (result.hasNext()) {
+				BindingSet set = result.next();
+				Binding b = set.getBinding("a");
+				aligns.add(b.getValue().toString());
+//				System.out.println(b.getValue().toString());
+			}
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String[] array = new String[aligns.size()];
+		aligns.toArray(array);
+		return array;
+	}
+	
+	public String[][] getMap(String alignURI) {
+		Map<String, String> map = new HashMap<String, String>();
+		String queryMap = "PREFIX align: <"+vocab+"> \n" +
+				"PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> \n" +
+				"SELECT DISTINCT ?e1 ?e2 ?f\n" +
+				"WHERE{ \n" +
+				"	<"+alignURI+"> align:map ?c .\n" +
+				"	?c align:measure ?f .\n" +
+				"	FILTER( ?f >= \"1.0\"^^xsd:float) .\n" +
+				"	?c align:entity1 ?e1 .\n" +
+				"	?c align:entity2 ?e2 }";
+		
+//		System.out.println(queryMap);
+		TupleQuery pQuery = null;
+		TupleQueryResult result = null;
+
+		try {
+			pQuery = con
+					.prepareTupleQuery(QueryLanguage.SPARQL, queryMap);
+			result = pQuery.evaluate();
+			
+			while (result.hasNext()) {
+				BindingSet set = result.next();
+				Binding entity1 = set.getBinding("e1");
+				Binding entity2 = set.getBinding("e2");
+//				Binding measure = set.getBinding("f");
+				map.put(entity1.getValue().toString(), entity2.getValue().toString());
+//				System.out.println(entity1.getValue().toString() +" =\t "+measure.toString()+" \t= "+ entity2.getValue().toString());
+			}
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String[][] ret = new String[map.size()][map.size()];
+		int i = 0;
+		Iterator<String> it = map.keySet().iterator();
+		while(it.hasNext()){
+			ret[i][0] = it.next();
+			ret[i][1] = map.get( ret[i][0] );
+			i++;
+		}
+		return ret;	
+		// return map;
+	}
+	
+	public String alignImport(String urlIDAlign) {
+		String ret = "0";
+		URL align;
+		try {
+			align = new URL(
+					"http://aserv.inrialpes.fr/html/retrieve?"
+							+ "method=fr.inrialpes.exmo.align.impl.renderer.RDFRendererVisitor"
+							+ "&id=" + urlIDAlign);
+
+			String queryString = "PREFIX align:<http://knowledgeweb.semanticweb.org/heterogeneity/alignment#>\n" +
+								 "SELECT DISTINCT ?a\n" +
+								 "WHERE{ <"+urlIDAlign+"> ?a align:Alignment }";
+			
+			TupleQuery tupleQuery = con.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+			TupleQueryResult result = tupleQuery.evaluate();
+			if(!result.hasNext()){
+				long before = con.size();
+				con.add(align, vocab, RDFFormat.RDFXML);
+				con.commit();
+				long after = con.size();
+				ret = String.valueOf(after - before);
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		} catch (RDFParseException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		} catch (IOException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		} catch (MalformedQueryException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		} catch (QueryEvaluationException e) {
+			e.printStackTrace();
+			ret = e.getMessage();
+		}
+		return ret;
+	}
+
+	/**
+	 * @param args
+	 * @throws UnsupportedEncodingException
+	 * @throws URISyntaxException
+	 */
+	public static void main(String[] args) {
+		AlignmentManager process;
+		try {
+			process = new AlignmentManager();
+			// List<String> l = process.getAlignments("http://www.owl-ontologies.com/PerSoN.owl");
+			String[] l = process.getAlignments("http://www.owl-ontologies.com/PerSoN.owl");
+			// Iterator<String> i = l.iterator();
+			int i = 0;
+			while(i < l.length)
+			// while(i.hasNext())
+				// process.getMap(i.next());
+				process.getMap(l[i]);
+		} catch (RepositoryException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+	}
+
+}

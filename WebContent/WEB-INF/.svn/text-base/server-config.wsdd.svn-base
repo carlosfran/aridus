@@ -1,0 +1,124 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\ARIDUS\WEB-INF\attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:service name="AlignmentApi" provider="java:RPC" style="wrapped" use="literal">
+  <ns2:operation name="getVocabTarget" qname="ns1:getVocabTarget" returnQName="ns1:getVocabTargetReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://ontocoord.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:alignURI" type="xsd:string"/>
+  </ns2:operation>
+  <ns1:operation name="getAlignments" qname="ns2:getAlignments" returnQName="ns2:getAlignmentsReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://ontocoord.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:ontoURI" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="alignImport" qname="ns3:alignImport" returnQName="ns3:alignImportReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://ontocoord.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:urlIDAlign" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getMap" qname="ns4:getMap" returnQName="ns4:getMapReturn" returnType="ns4:ArrayOf_xsd_string" soapAction="" xmlns:ns4="http://ontocoord.aridus.uern.br">
+   <ns1:parameter qname="ns4:alignURI" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="alignImport getVocabTarget getAlignments getMap"/>
+  <ns1:parameter name="wsdlPortType" value="AlignmentApi"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://ontocoord.aridus.uern.br"/>
+  <ns1:parameter name="wsdlServicePort" value="AlignmentApi"/>
+  <ns1:parameter name="className" value="br.uern.aridus.ontocoord.AlignmentManager"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://ontocoord.aridus.uern.br"/>
+  <ns1:parameter name="wsdlServiceElement" value="AlignmentApiService"/>
+  <ns1:arrayMapping innerType="xsd:string" languageSpecificType="java:java.lang.String[]" qname="ns5:ArrayOf_xsd_string" xmlns:ns5="http://ontocoord.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
+ <ns1:service name="QueryRewritter" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="queryRewritter1" qname="ns6:queryRewritter1" returnQName="ns6:queryRewritter1Return" returnType="xsd:string" soapAction="" xmlns:ns6="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:query" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="queryRewritter2" qname="ns7:queryRewritter2" returnQName="ns7:queryRewritter2Return" returnType="xsd:string" soapAction="" xmlns:ns7="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns7:query" type="xsd:string"/>
+   <ns1:parameter qname="ns7:alignEntities" type="ns7:ArrayOf_xsd_string"/>
+  </ns1:operation>
+  <ns1:operation name="queryRewritter3" qname="ns8:queryRewritter3" returnQName="ns8:queryRewritter3Return" returnType="xsd:string" soapAction="" xmlns:ns8="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns8:query" type="xsd:string"/>
+   <ns1:parameter qname="ns8:alignIDList" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="queryRewritter4" qname="ns9:queryRewritter4" returnQName="ns9:queryRewritter4Return" returnType="xsd:string" soapAction="" xmlns:ns9="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:query" type="xsd:string"/>
+   <ns1:parameter qname="ns9:alignID" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="listVocabsInQuery" qname="ns10:listVocabsInQuery" returnQName="ns10:listVocabsInQueryReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns10:squery" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="queryRewritter4 listVocabsInQuery queryRewritter1 queryRewritter2 queryRewritter3"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="QueryRewritter"/>
+  <ns1:parameter name="className" value="br.uern.aridus.query.QueryRewritter"/>
+  <ns1:parameter name="wsdlServicePort" value="QueryRewritter"/>
+  <ns1:parameter name="schemaQualified" value="http://query.aridus.uern.br"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://query.aridus.uern.br"/>
+  <ns1:parameter name="wsdlServiceElement" value="QueryRewritterService"/>
+  <ns1:arrayMapping innerType="xsd:string" languageSpecificType="java:java.lang.String[]" qname="ns11:ArrayOf_xsd_string" xmlns:ns11="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="QueryExecutor" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="execute1" qname="ns12:execute1" returnQName="ns12:execute1Return" returnType="xsd:string" soapAction="" xmlns:ns12="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns12:query" type="xsd:string"/>
+   <ns1:fault class="org.openrdf.repository.RepositoryException" qname="ns12:fault" type="ns13:RepositoryException" xmlns:ns13="http://repository.openrdf.org"/>
+  </ns1:operation>
+  <ns1:operation name="execute2" qname="ns14:execute2" returnQName="ns14:execute2Return" returnType="xsd:string" soapAction="" xmlns:ns14="http://query.aridus.uern.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns14:query" type="xsd:string"/>
+   <ns1:parameter qname="ns14:targetEndpoints" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="execute2 execute1"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="QueryExecutor"/>
+  <ns1:parameter name="className" value="br.uern.aridus.query.QueryExecutor"/>
+  <ns1:parameter name="wsdlServicePort" value="QueryExecutor"/>
+  <ns1:parameter name="schemaQualified" value="http://openrdf.org,http://query.aridus.uern.br,http://repository.openrdf.org"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://query.aridus.uern.br"/>
+  <ns1:parameter name="wsdlServiceElement" value="QueryExecutorService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns15:OpenRDFException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:org.openrdf.OpenRDFException" xmlns:ns15="http://openrdf.org"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns16:RepositoryException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:org.openrdf.repository.RepositoryException" xmlns:ns16="http://repository.openrdf.org"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>

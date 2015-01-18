@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DataSetManagerService" targetNamespace="http://ws.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.aridus.uern.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:import namespace="http://model.aridus.uern.br/" location="DataSetManagerIface.wsdl">
+    </wsdl:import>
+  <wsdl:binding name="DataSetManagerServiceSoapBinding" type="ns1:DataSetManagerIface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="listDatasetsByVocabs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listDatasetsByVocabs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDatasetsByVocabsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByVocabs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listEndpointsByVocabs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listEndpointsByVocabsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listEndpointsByUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listEndpointsByUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateProp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateProp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updatePropResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="create">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createProp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createPropResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteProp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deletePropResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByVocab">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listEndpointsByVocab">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listEndpointsByVocabResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetsByUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listDatasetsByUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDatasetsByUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetsByVocab">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listDatasetsByVocab">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDatasetsByVocabResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointVocabs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listEndpointVocabs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listEndpointVocabsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetVocabs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listDatasetVocabs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listDatasetVocabsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delete">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="delete">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProp">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getProp">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getPropResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DataSetManagerService">
+    <wsdl:port name="DataSetManagerPort" binding="tns:DataSetManagerServiceSoapBinding">
+      <soap:address location="http://localhost:9090/DataSetManagerPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,36 @@
+package br.uern.aridus.query;
+
+import java.util.List;
+
+public interface DataSet {
+
+	boolean create(String dtURI, String dtTitle, String dtDescription,
+			String dtHomepage, String dtSparqlEndpoint, long triples, List<String> vocabulary);
+	
+	boolean delete(String dtURI);
+	
+	List<String> listDatasetsByUser(String username);
+	
+	List<String> listDatasetsByVocab(String vocab);
+	
+	List<String> listDatasetsByVocabs(List<String> vocabs);
+	
+	List<String> listEndpointsByUser(String username);
+	
+	List<String> listEndpointsByVocab(String vocab);
+	
+	List<String> listEndpointsByVocabs(List<String> vocabs);
+	
+	List<String> listDatasetVocabs(String dataset);
+	
+	List<String> listEndpointVocabs(String endpoint);
+	
+	String getProp(String dataset, String prop);
+	
+	boolean createProp(String dataset, String prop, String value);
+	
+	boolean updateProp(String dataset, String prop, String oldValue, String newValue);
+	
+	boolean deleteProp(String dataset, String prop, String value);
+	
+}

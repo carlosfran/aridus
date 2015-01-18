@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DataSetManagerIface" targetNamespace="http://model.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://model.aridus.uern.br/" schemaLocation="datasetmanager_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="listEndpointVocabsResponse">
+    <wsdl:part name="parameters" element="ns1:listEndpointVocabsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteProp">
+    <wsdl:part name="parameters" element="ns1:deleteProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPropResponse">
+    <wsdl:part name="parameters" element="ns1:getPropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByVocabResponse">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByVocabResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointVocabs">
+    <wsdl:part name="parameters" element="ns1:listEndpointVocabs">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByVocabs">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByVocabs">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByUser">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delete">
+    <wsdl:part name="parameters" element="ns1:delete">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createResponse">
+    <wsdl:part name="parameters" element="ns1:createResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProp">
+    <wsdl:part name="parameters" element="ns1:getProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetVocabs">
+    <wsdl:part name="parameters" element="ns1:listDatasetVocabs">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateProp">
+    <wsdl:part name="parameters" element="ns1:updateProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByVocabsResponse">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByVocabsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByVocabsResponse">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByVocabsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByVocab">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByVocab">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByUserResponse">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createPropResponse">
+    <wsdl:part name="parameters" element="ns1:createPropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByVocabs">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByVocabs">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePropResponse">
+    <wsdl:part name="parameters" element="ns1:updatePropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByVocab">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByVocab">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createProp">
+    <wsdl:part name="parameters" element="ns1:createProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="create">
+    <wsdl:part name="parameters" element="ns1:create">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listEndpointsByUser">
+    <wsdl:part name="parameters" element="ns1:listEndpointsByUser">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByVocabResponse">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByVocabResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteResponse">
+    <wsdl:part name="parameters" element="ns1:deleteResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetsByUserResponse">
+    <wsdl:part name="parameters" element="ns1:listDatasetsByUserResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listDatasetVocabsResponse">
+    <wsdl:part name="parameters" element="ns1:listDatasetVocabsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deletePropResponse">
+    <wsdl:part name="parameters" element="ns1:deletePropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DataSetManagerIface">
+    <wsdl:operation name="listDatasetsByVocabs">
+      <wsdl:input name="listDatasetsByVocabs" message="ns1:listDatasetsByVocabs">
+    </wsdl:input>
+      <wsdl:output name="listDatasetsByVocabsResponse" message="ns1:listDatasetsByVocabsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByVocabs">
+      <wsdl:input name="listEndpointsByVocabs" message="ns1:listEndpointsByVocabs">
+    </wsdl:input>
+      <wsdl:output name="listEndpointsByVocabsResponse" message="ns1:listEndpointsByVocabsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByUser">
+      <wsdl:input name="listEndpointsByUser" message="ns1:listEndpointsByUser">
+    </wsdl:input>
+      <wsdl:output name="listEndpointsByUserResponse" message="ns1:listEndpointsByUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateProp">
+      <wsdl:input name="updateProp" message="ns1:updateProp">
+    </wsdl:input>
+      <wsdl:output name="updatePropResponse" message="ns1:updatePropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <wsdl:input name="create" message="ns1:create">
+    </wsdl:input>
+      <wsdl:output name="createResponse" message="ns1:createResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createProp">
+      <wsdl:input name="createProp" message="ns1:createProp">
+    </wsdl:input>
+      <wsdl:output name="createPropResponse" message="ns1:createPropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteProp">
+      <wsdl:input name="deleteProp" message="ns1:deleteProp">
+    </wsdl:input>
+      <wsdl:output name="deletePropResponse" message="ns1:deletePropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointsByVocab">
+      <wsdl:input name="listEndpointsByVocab" message="ns1:listEndpointsByVocab">
+    </wsdl:input>
+      <wsdl:output name="listEndpointsByVocabResponse" message="ns1:listEndpointsByVocabResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetsByUser">
+      <wsdl:input name="listDatasetsByUser" message="ns1:listDatasetsByUser">
+    </wsdl:input>
+      <wsdl:output name="listDatasetsByUserResponse" message="ns1:listDatasetsByUserResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetsByVocab">
+      <wsdl:input name="listDatasetsByVocab" message="ns1:listDatasetsByVocab">
+    </wsdl:input>
+      <wsdl:output name="listDatasetsByVocabResponse" message="ns1:listDatasetsByVocabResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listEndpointVocabs">
+      <wsdl:input name="listEndpointVocabs" message="ns1:listEndpointVocabs">
+    </wsdl:input>
+      <wsdl:output name="listEndpointVocabsResponse" message="ns1:listEndpointVocabsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listDatasetVocabs">
+      <wsdl:input name="listDatasetVocabs" message="ns1:listDatasetVocabs">
+    </wsdl:input>
+      <wsdl:output name="listDatasetVocabsResponse" message="ns1:listDatasetVocabsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delete">
+      <wsdl:input name="delete" message="ns1:delete">
+    </wsdl:input>
+      <wsdl:output name="deleteResponse" message="ns1:deleteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProp">
+      <wsdl:input name="getProp" message="ns1:getProp">
+    </wsdl:input>
+      <wsdl:output name="getPropResponse" message="ns1:getPropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

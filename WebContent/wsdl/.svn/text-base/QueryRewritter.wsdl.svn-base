@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://query.aridus.uern.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://query.aridus.uern.br" xmlns:intf="http://query.aridus.uern.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://query.aridus.uern.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="queryRewritter1">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter1Response">
+    <complexType>
+     <sequence>
+      <element name="queryRewritter1Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter2">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="alignEntities" type="impl:ArrayOf_xsd_string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="queryRewritter2Response">
+    <complexType>
+     <sequence>
+      <element name="queryRewritter2Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter3">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="alignIDList" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter3Response">
+    <complexType>
+     <sequence>
+      <element name="queryRewritter3Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter4">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+      <element name="alignID" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryRewritter4Response">
+    <complexType>
+     <sequence>
+      <element name="queryRewritter4Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="listVocabsInQuery">
+    <complexType>
+     <sequence>
+      <element name="squery" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="listVocabsInQueryResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="listVocabsInQueryReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="queryRewritter3Response">
+
+      <wsdl:part element="impl:queryRewritter3Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter1Response">
+
+      <wsdl:part element="impl:queryRewritter1Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter1Request">
+
+      <wsdl:part element="impl:queryRewritter1" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter4Request">
+
+      <wsdl:part element="impl:queryRewritter4" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter2Response">
+
+      <wsdl:part element="impl:queryRewritter2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listVocabsInQueryRequest">
+
+      <wsdl:part element="impl:listVocabsInQuery" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listVocabsInQueryResponse">
+
+      <wsdl:part element="impl:listVocabsInQueryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter4Response">
+
+      <wsdl:part element="impl:queryRewritter4Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter3Request">
+
+      <wsdl:part element="impl:queryRewritter3" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryRewritter2Request">
+
+      <wsdl:part element="impl:queryRewritter2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="QueryRewritter">
+
+      <wsdl:operation name="queryRewritter1">
+
+         <wsdl:input message="impl:queryRewritter1Request" name="queryRewritter1Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryRewritter1Response" name="queryRewritter1Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter2">
+
+         <wsdl:input message="impl:queryRewritter2Request" name="queryRewritter2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryRewritter2Response" name="queryRewritter2Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter3">
+
+         <wsdl:input message="impl:queryRewritter3Request" name="queryRewritter3Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryRewritter3Response" name="queryRewritter3Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter4">
+
+         <wsdl:input message="impl:queryRewritter4Request" name="queryRewritter4Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryRewritter4Response" name="queryRewritter4Response">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listVocabsInQuery">
+
+         <wsdl:input message="impl:listVocabsInQueryRequest" name="listVocabsInQueryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:listVocabsInQueryResponse" name="listVocabsInQueryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="QueryRewritterSoapBinding" type="impl:QueryRewritter">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="queryRewritter1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRewritter1Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRewritter1Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRewritter2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRewritter2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter3">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRewritter3Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRewritter3Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryRewritter4">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryRewritter4Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryRewritter4Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listVocabsInQuery">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listVocabsInQueryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listVocabsInQueryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="QueryRewritterService">
+
+      <wsdl:port binding="impl:QueryRewritterSoapBinding" name="QueryRewritter">
+
+         <wsdlsoap:address location="http://localhost:8080/ARIDUS/services/QueryRewritter"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

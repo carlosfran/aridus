@@ -1,0 +1,13 @@
+package br.uern.aridus.sys;
+
+public interface AUser {
+	long create(String username, String psswd, String email, String uriprofile);
+	
+	boolean delete(String username, String psswd);
+
+	long check(String username, String psswd);
+
+	String getProp(String username, String psswd, String prop);
+
+	boolean updateProp(String username, String psswd, String prop, String value);
+}

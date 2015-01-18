@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+	http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+	http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    	
+	    <!-- 		
+	<import resource="classpath:META-INF/cxf/cxf-beans.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-jaxrs-binding.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+ 	-->
+ 	
+	<!-- Beans que implementam os serviços -->
+	<bean id="userprofile"
+	     class="br.uern.aridus.ws.UserProfileManager" />
+	 <bean id="dataset"
+	     class="br.uern.aridus.ws.DataSetManager" />
+
+	<!-- Mapeamento dos endpoints WS -->	
+	<jaxrs:server id="userprofilemanagerrs" address="/userprofile/">
+		<jaxrs:serviceBeans>
+			<ref bean="userprofile" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<!-- <jaxrs:inInterceptors>
+			<ref bean="securityRSInterceptor" />
+		</jaxrs:inInterceptors> -->
+		<jaxrs:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxrs:features>
+	</jaxrs:server>
+	
+	<jaxws:endpoint id="userprofilemanagerws"
+		implementor="br.uern.aridus.ws.UserProfileManager" 
+		wsdlLocation="wsdl/userprofilemanager.wsdl" 
+		address="/ws/">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		<!-- <jaxws:inInterceptors> 
+		    <ref bean="securityWSInterceptor" /> 
+		</jaxws:inInterceptors> -->
+	</jaxws:endpoint>
+	
+	<jaxrs:server id="datasetmanagerrs" address="/dataset/">
+		<jaxrs:serviceBeans>
+			<ref bean="dataset" />
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<!-- <jaxrs:inInterceptors>
+			<ref bean="securityRSInterceptor" />
+		</jaxrs:inInterceptors> -->
+		<jaxrs:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxrs:features>
+	</jaxrs:server>
+	
+	<jaxws:endpoint id="datasetmanagerws"
+		implementor="br.uern.aridus.ws.DataSetManager" 
+		wsdlLocation="wsdl/datasetmanager.wsdl" 
+		address="/ws/">
+		<jaxws:features>
+			<bean class="org.apache.cxf.feature.LoggingFeature" />
+		</jaxws:features>
+		<!-- <jaxws:inInterceptors> 
+		    <ref bean="securityWSInterceptor" /> 
+		</jaxws:inInterceptors> -->
+	</jaxws:endpoint>
+</beans>

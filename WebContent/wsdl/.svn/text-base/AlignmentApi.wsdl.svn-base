@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://ontocoord.aridus.uern.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ontocoord.aridus.uern.br" xmlns:intf="http://ontocoord.aridus.uern.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://ontocoord.aridus.uern.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getVocabTarget">
+    <complexType>
+     <sequence>
+      <element name="alignURI" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getVocabTargetResponse">
+    <complexType>
+     <sequence>
+      <element name="getVocabTargetReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAlignments">
+    <complexType>
+     <sequence>
+      <element name="ontoURI" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAlignmentsResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getAlignmentsReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="alignImport">
+    <complexType>
+     <sequence>
+      <element name="urlIDAlign" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="alignImportResponse">
+    <complexType>
+     <sequence>
+      <element name="alignImportReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMap">
+    <complexType>
+     <sequence>
+      <element name="alignURI" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getMapResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getMapReturn" type="impl:ArrayOf_xsd_string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_string">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getVocabTargetResponse">
+
+      <wsdl:part element="impl:getVocabTargetResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMapResponse">
+
+      <wsdl:part element="impl:getMapResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="alignImportResponse">
+
+      <wsdl:part element="impl:alignImportResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAlignmentsResponse">
+
+      <wsdl:part element="impl:getAlignmentsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="alignImportRequest">
+
+      <wsdl:part element="impl:alignImport" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getVocabTargetRequest">
+
+      <wsdl:part element="impl:getVocabTarget" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAlignmentsRequest">
+
+      <wsdl:part element="impl:getAlignments" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getMapRequest">
+
+      <wsdl:part element="impl:getMap" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="AlignmentApi">
+
+      <wsdl:operation name="getVocabTarget">
+
+         <wsdl:input message="impl:getVocabTargetRequest" name="getVocabTargetRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getVocabTargetResponse" name="getVocabTargetResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAlignments">
+
+         <wsdl:input message="impl:getAlignmentsRequest" name="getAlignmentsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAlignmentsResponse" name="getAlignmentsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="alignImport">
+
+         <wsdl:input message="impl:alignImportRequest" name="alignImportRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:alignImportResponse" name="alignImportResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMap">
+
+         <wsdl:input message="impl:getMapRequest" name="getMapRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getMapResponse" name="getMapResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="AlignmentApiSoapBinding" type="impl:AlignmentApi">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getVocabTarget">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getVocabTargetRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getVocabTargetResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAlignments">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAlignmentsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAlignmentsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="alignImport">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="alignImportRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="alignImportResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getMap">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getMapRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getMapResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="AlignmentApiService">
+
+      <wsdl:port binding="impl:AlignmentApiSoapBinding" name="AlignmentApi">
+
+         <wsdlsoap:address location="http://localhost:8080/ARIDUS/services/AlignmentApi"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

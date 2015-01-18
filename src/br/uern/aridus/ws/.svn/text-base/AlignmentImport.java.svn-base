@@ -1,0 +1,31 @@
+package br.uern.aridus.ws;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.openrdf.repository.RepositoryException;
+
+import br.uern.aridus.ontocoord.AlignmentManager;
+
+@Path("/align")
+public class AlignmentImport {
+
+	AlignmentManager alignProcess;
+
+	public AlignmentImport() throws RepositoryException {
+		alignProcess = new AlignmentManager();
+	}
+
+	// @POST
+	@GET
+	@Path("/import")
+	@Produces(MediaType.TEXT_XML)
+	public Response alignImport(@QueryParam("urlid") String urlIDAlign) {
+		String ret = alignProcess.alignImport(urlIDAlign);
+		return Response.status(200).entity(ret).build();
+	}
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="QueryExecutorIface" targetNamespace="http://model.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://model.aridus.uern.br/" schemaLocation="queryexecutor_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="RepositoryException">
+    <wsdl:part name="RepositoryException" element="ns1:RepositoryException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="execute2Response">
+    <wsdl:part name="parameters" element="ns1:execute2Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IOException">
+    <wsdl:part name="IOException" element="ns1:IOException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnsupportedQueryResultFormatException">
+    <wsdl:part name="UnsupportedQueryResultFormatException" element="ns1:UnsupportedQueryResultFormatException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="QueryEvaluationException">
+    <wsdl:part name="QueryEvaluationException" element="ns1:QueryEvaluationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="execute1Response">
+    <wsdl:part name="parameters" element="ns1:execute1Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="execute1">
+    <wsdl:part name="parameters" element="ns1:execute1">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TupleQueryResultHandlerException">
+    <wsdl:part name="TupleQueryResultHandlerException" element="ns1:TupleQueryResultHandlerException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="execute2">
+    <wsdl:part name="parameters" element="ns1:execute2">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="QueryExecutorIface">
+    <wsdl:operation name="execute2">
+      <wsdl:input name="execute2" message="ns1:execute2">
+    </wsdl:input>
+      <wsdl:output name="execute2Response" message="ns1:execute2Response">
+    </wsdl:output>
+      <wsdl:fault name="IOException" message="ns1:IOException">
+    </wsdl:fault>
+      <wsdl:fault name="UnsupportedQueryResultFormatException" message="ns1:UnsupportedQueryResultFormatException">
+    </wsdl:fault>
+      <wsdl:fault name="QueryEvaluationException" message="ns1:QueryEvaluationException">
+    </wsdl:fault>
+      <wsdl:fault name="TupleQueryResultHandlerException" message="ns1:TupleQueryResultHandlerException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="execute1">
+      <wsdl:input name="execute1" message="ns1:execute1">
+    </wsdl:input>
+      <wsdl:output name="execute1Response" message="ns1:execute1Response">
+    </wsdl:output>
+      <wsdl:fault name="RepositoryException" message="ns1:RepositoryException">
+    </wsdl:fault>
+      <wsdl:fault name="IOException" message="ns1:IOException">
+    </wsdl:fault>
+      <wsdl:fault name="UnsupportedQueryResultFormatException" message="ns1:UnsupportedQueryResultFormatException">
+    </wsdl:fault>
+      <wsdl:fault name="QueryEvaluationException" message="ns1:QueryEvaluationException">
+    </wsdl:fault>
+      <wsdl:fault name="TupleQueryResultHandlerException" message="ns1:TupleQueryResultHandlerException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

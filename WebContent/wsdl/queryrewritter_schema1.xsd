@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:ns1="http://jaxb.dev.java.net/array" xmlns:tns="http://model.aridus.uern.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://model.aridus.uern.br/" version="1.0">
+<xs:import namespace="http://jaxb.dev.java.net/array" schemaLocation="queryrewritter_schema2.xsd"/>
+<xs:element name="listVocabs" type="tns:listVocabs"/>
+<xs:element name="listVocabsResponse" type="tns:listVocabsResponse"/>
+<xs:element name="queryRewritter1" type="tns:queryRewritter1"/>
+<xs:element name="queryRewritter1Response" type="tns:queryRewritter1Response"/>
+<xs:element name="queryRewritter2" type="tns:queryRewritter2"/>
+<xs:element name="queryRewritter2Response" type="tns:queryRewritter2Response"/>
+<xs:element name="queryRewritter3" type="tns:queryRewritter3"/>
+<xs:element name="queryRewritter3Response" type="tns:queryRewritter3Response"/>
+<xs:element name="queryRewritter4" type="tns:queryRewritter4"/>
+<xs:element name="queryRewritter4Response" type="tns:queryRewritter4Response"/>
+<xs:complexType name="queryRewritter4">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+      <xs:element minOccurs="0" name="alignid" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter4Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="alignentities" type="ns1:stringArray"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter2Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter3">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="alignidlist" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter3Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listVocabs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="listVocabsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter1">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryRewritter1Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

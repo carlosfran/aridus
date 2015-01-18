@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AlignmentImportIface" targetNamespace="http://model.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://model.aridus.uern.br/" schemaLocation="alignmentimport_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="alignImport">
+    <wsdl:part name="parameters" element="ns1:alignImport">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="alignImportResponse">
+    <wsdl:part name="parameters" element="ns1:alignImportResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="AlignmentImportIface">
+    <wsdl:operation name="alignImport">
+      <wsdl:input name="alignImport" message="ns1:alignImport">
+    </wsdl:input>
+      <wsdl:output name="alignImportResponse" message="ns1:alignImportResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

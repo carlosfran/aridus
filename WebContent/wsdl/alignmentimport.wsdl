@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AlignmentImportService" targetNamespace="http://ws.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.aridus.uern.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <wsdl:import namespace="http://model.aridus.uern.br/" location="AlignmentImportIface.wsdl">
+    </wsdl:import>
+  <wsdl:binding name="AlignmentImportServiceSoapBinding" type="ns1:AlignmentImportIface">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="alignImport">
+      <soap12:operation soapAction="" style="document"/>
+      <wsdl:input name="alignImport">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="alignImportResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AlignmentImportService">
+    <wsdl:port name="AlignmentImportPort" binding="tns:AlignmentImportServiceSoapBinding">
+      <soap12:address location="http://localhost:8080/ARIDUS/services/AlignmentImportPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

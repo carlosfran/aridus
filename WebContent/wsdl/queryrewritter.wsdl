@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="QueryRewritterService" targetNamespace="http://ws.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.aridus.uern.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:import namespace="http://model.aridus.uern.br/" location="QueryRewritterIface.wsdl">
+    </wsdl:import>
+  <wsdl:binding name="QueryRewritterServiceSoapBinding" type="ns1:QueryRewritterIface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryRewritter4">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRewritter4">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRewritter4Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter2">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRewritter2">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRewritter2Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter3">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRewritter3">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRewritter3Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listVocabs">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listVocabs">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listVocabsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter1">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRewritter1">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRewritter1Response">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="QueryRewritterService">
+    <wsdl:port name="QueryRewritterPort" binding="tns:QueryRewritterServiceSoapBinding">
+      <soap:address location="http://localhost:9090/QueryRewritterPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

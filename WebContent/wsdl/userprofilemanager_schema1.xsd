@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://model.aridus.uern.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://model.aridus.uern.br/" version="1.0">
+<xs:element name="check" type="tns:check"/>
+<xs:element name="checkResponse" type="tns:checkResponse"/>
+<xs:element name="create" type="tns:create"/>
+<xs:element name="createResponse" type="tns:createResponse"/>
+<xs:element name="delete" type="tns:delete"/>
+<xs:element name="deleteResponse" type="tns:deleteResponse"/>
+<xs:element name="getProp" type="tns:getProp"/>
+<xs:element name="getPropResponse" type="tns:getPropResponse"/>
+<xs:element name="updateProp" type="tns:updateProp"/>
+<xs:element name="updatePropResponse" type="tns:updatePropResponse"/>
+<xs:complexType name="updateProp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="prop" type="xs:string"/>
+      <xs:element minOccurs="0" name="value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updatePropResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:response"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="response">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="create">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="psswd" type="xs:string"/>
+      <xs:element minOccurs="0" name="email" type="xs:string"/>
+      <xs:element minOccurs="0" name="uriprofile" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:response"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getProp">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="prop" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getPropResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:response"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="check">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="username" type="xs:string"/>
+      <xs:element minOccurs="0" name="psswd" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="checkResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:response"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="delete">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="deleteResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:response"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

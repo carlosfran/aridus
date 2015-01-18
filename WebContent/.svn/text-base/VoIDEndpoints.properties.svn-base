@@ -1,0 +1,5 @@
+# VOID Endpoints
+# void1=http://void.rkbexplorer.com/sparql
+# http://kwijibo.talis.com/voiD/
+#void=http://api.talis.com/stores/kwijibo-dev3/services/sparql
+void1=http://localhost:8080/openrdf-sesame/repositories/datasetkb

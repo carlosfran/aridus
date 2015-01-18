@@ -1,0 +1,61 @@
+package br.uern.aridus.sys;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class DocBase {
+	private long iddoc;
+	private String title;
+	private String abstractText;
+	private String keywords;
+	private long userId;
+	
+	public DocBase(long iddoc, long userId, String title, String abstractText, String keywords){
+		this.iddoc = iddoc;
+		this.userId = userId;
+		this.abstractText = abstractText;
+		this.keywords = keywords;
+		this.title = title;
+	}
+
+	public long getIdDoc() {
+		return iddoc;
+	}
+
+	public void setIdDocument(long idProject) {
+		this.iddoc = idProject;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getAbstractText() {
+		return abstractText;
+	}
+
+	public void setAbstractText(String abstractText) {
+		this.abstractText = abstractText;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+}

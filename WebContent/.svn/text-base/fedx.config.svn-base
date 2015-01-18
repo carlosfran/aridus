@@ -1,0 +1,2 @@
+debugQueryPlan = true
+debugWorkerScheduler = true

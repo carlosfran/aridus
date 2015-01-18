@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://query.aridus.uern.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://query.aridus.uern.br" xmlns:intf="http://query.aridus.uern.br" xmlns:tns1="http://repository.openrdf.org" xmlns:tns2="http://openrdf.org" xmlns:tns3="http://query.openrdf.org" xmlns:tns4="http://resultio.query.openrdf.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://query.aridus.uern.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://repository.openrdf.org"/>
+   <import namespace="http://query.openrdf.org"/>
+   <import namespace="http://resultio.query.openrdf.org"/>
+   <import namespace="http://openrdf.org"/>
+   <element name="execute1">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="execute1Response">
+    <complexType>
+     <sequence>
+      <element name="execute1Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="fault" type="tns1:RepositoryException"/>
+   <element name="fault1" type="tns3:TupleQueryResultHandlerException"/>
+   <element name="fault2" type="xsd:anyType"/>
+   <element name="fault3" type="tns3:QueryEvaluationException"/>
+   <element name="execute2">
+    <complexType>
+     <sequence>
+      <element name="query" type="xsd:string"/>
+      <element maxOccurs="unbounded" name="targetEndpoints" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="execute2Response">
+    <complexType>
+     <sequence>
+      <element name="execute2Return" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://openrdf.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://repository.openrdf.org"/>
+   <import namespace="http://query.openrdf.org"/>
+   <import namespace="http://resultio.query.openrdf.org"/>
+   <complexType abstract="true" name="OpenRDFException">
+    <sequence/>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://repository.openrdf.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://query.openrdf.org"/>
+   <import namespace="http://resultio.query.openrdf.org"/>
+   <import namespace="http://openrdf.org"/>
+   <complexType name="RepositoryException">
+    <complexContent>
+     <extension base="tns2:OpenRDFException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://query.openrdf.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://repository.openrdf.org"/>
+   <import namespace="http://resultio.query.openrdf.org"/>
+   <import namespace="http://openrdf.org"/>
+   <complexType name="TupleQueryResultHandlerException">
+    <complexContent>
+     <extension base="tns2:OpenRDFException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="QueryEvaluationException">
+    <complexContent>
+     <extension base="tns2:OpenRDFException">
+      <sequence/>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="RepositoryException">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="execute2Response">
+
+      <wsdl:part element="impl:execute2Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="TupleQueryResultHandlerException">
+
+      <wsdl:part element="impl:fault1" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="execute1Response">
+
+      <wsdl:part element="impl:execute1Response" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="execute2Request">
+
+      <wsdl:part element="impl:execute2" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="QueryEvaluationException">
+
+      <wsdl:part element="impl:fault3" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="UnsupportedQueryResultFormatException">
+
+      <wsdl:part element="impl:fault2" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="execute1Request">
+
+      <wsdl:part element="impl:execute1" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="QueryExecutor">
+
+      <wsdl:operation name="execute1">
+
+         <wsdl:input message="impl:execute1Request" name="execute1Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:execute1Response" name="execute1Response">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:RepositoryException" name="RepositoryException">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:UnsupportedQueryResultFormatException" name="UnsupportedQueryResultFormatException">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:QueryEvaluationException" name="QueryEvaluationException">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:TupleQueryResultHandlerException" name="TupleQueryResultHandlerException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="execute2">
+
+         <wsdl:input message="impl:execute2Request" name="execute2Request">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:execute2Response" name="execute2Response">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:UnsupportedQueryResultFormatException" name="UnsupportedQueryResultFormatException">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:QueryEvaluationException" name="QueryEvaluationException">
+
+       </wsdl:fault>
+
+         <wsdl:fault message="impl:TupleQueryResultHandlerException" name="TupleQueryResultHandlerException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="QueryExecutorSoapBinding" type="impl:QueryExecutor">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="execute1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="execute1Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="execute1Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="RepositoryException">
+
+            <wsdlsoap:fault name="RepositoryException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="UnsupportedQueryResultFormatException">
+
+            <wsdlsoap:fault name="UnsupportedQueryResultFormatException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="QueryEvaluationException">
+
+            <wsdlsoap:fault name="QueryEvaluationException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="TupleQueryResultHandlerException">
+
+            <wsdlsoap:fault name="TupleQueryResultHandlerException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="execute2">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="execute2Request">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="execute2Response">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="UnsupportedQueryResultFormatException">
+
+            <wsdlsoap:fault name="UnsupportedQueryResultFormatException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="QueryEvaluationException">
+
+            <wsdlsoap:fault name="QueryEvaluationException" use="literal"/>
+
+         </wsdl:fault>
+
+         <wsdl:fault name="TupleQueryResultHandlerException">
+
+            <wsdlsoap:fault name="TupleQueryResultHandlerException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="QueryExecutorService">
+
+      <wsdl:port binding="impl:QueryExecutorSoapBinding" name="QueryExecutor">
+
+         <wsdlsoap:address location="http://localhost:8080/ARIDUS/services/QueryExecutor"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

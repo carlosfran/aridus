@@ -1,0 +1,27 @@
+package br.uern.aridus.sys;
+
+import com.sun.jersey.api.core.HttpContext;
+import com.sun.jersey.api.core.HttpRequestContext;
+import com.sun.jersey.core.util.Base64;
+
+public class AAuthentication {
+	
+	public static String[] getCredentials(HttpContext context){
+		HttpRequestContext requestContext = context.getRequest();
+		String header = requestContext.getRequestHeader("authorization").get(0);
+		header = header.substring("Basic ".length());
+		String[] creds = new String(Base64.base64Decode(header)).split(":");
+		return creds;
+	}
+	
+	public static long checkCredentials(String username, String password){
+		return AUserImpl.checkCredentials(username, password);
+	}
+	
+	public static long checkCredentials(HttpContext context){
+		long valid = 0;
+		String[] creds = getCredentials(context);
+		valid = checkCredentials(creds[0],creds[1]);
+		return valid;
+	}
+}

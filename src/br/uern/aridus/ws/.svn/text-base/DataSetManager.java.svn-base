@@ -1,0 +1,262 @@
+package br.uern.aridus.ws;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.openrdf.repository.RepositoryException;
+
+import com.sun.jersey.api.core.HttpContext;
+
+import br.uern.aridus.query.DataSetImpl;
+import br.uern.aridus.sys.AAuthentication;
+
+@Path("/dataset")
+public class DataSetManager{
+	
+	private DataSetImpl datasetApi;
+	
+	public DataSetManager() throws RepositoryException{
+		datasetApi = new DataSetImpl();
+	}
+
+	@POST
+	@Path("/create")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response create(@Context HttpContext context, @FormParam("dtTitle") String dtTitle, @FormParam("dtDescription") String dtDescription,
+			 @FormParam("dtHomepage") String dtHomepage, @FormParam("dtSparqlEndpoint") String dtSparqlEndpoint, @FormParam("triples") long triples,
+			 @FormParam("v0") @DefaultValue(" ") String v0, @FormParam("v1") @DefaultValue(" ") String v1,
+				@FormParam("v2") @DefaultValue(" ") String v2, @FormParam("v3") @DefaultValue(" ") String v3,
+				@FormParam("v4") @DefaultValue(" ") String v4, @FormParam("v5") @DefaultValue(" ") String v5,
+				@FormParam("v6") @DefaultValue(" ") String v6, @FormParam("v7") @DefaultValue(" ") String v7,
+				@FormParam("v8") @DefaultValue(" ") String v8, @FormParam("v9") @DefaultValue(" ") String v9) {
+
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			String dtURI = DataSetImpl.datasetURIGenerator(creds[0], dtTitle);
+			
+			List<String> vocabs = new ArrayList<String>(10);
+			String[] vs = new String[] { v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 };
+			for (int i = 0; i < 10; i++) {
+				if (vs[i] != null && !vs[i].isEmpty() && vs[i].startsWith("http")) {
+					vocabs.add(vs[i]);
+					// System.out.println(">> "+vs[i]);
+				}
+			}
+			ret = datasetApi.create(dtURI, dtTitle, dtDescription, dtHomepage, dtSparqlEndpoint, triples, vocabs);		
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@DELETE
+	@Path("/delete")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response delete(@Context HttpContext context, @QueryParam("uri") String dtURI) {
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			if(DataSetImpl.checkDataSetOfUser(dtURI, creds[0]));
+				ret = datasetApi.delete(dtURI);
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@GET
+	@Path("/{username}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listDatasetsByUser(@PathParam("username") String username) {
+		List<String> list = datasetApi.listDatasetsByUser(username);
+		String ret = new String("");
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/vocabulary")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listDatasetsByVocab(@QueryParam("vocab") String vocab) {
+		String ret = new String("");
+		List<String> list = datasetApi.listDatasetsByVocab(vocab);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/vocabularies")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listDatasetsByVocabs(@QueryParam("v0") @DefaultValue(" ") String v0, @QueryParam("v1") @DefaultValue(" ") String v1,
+			@QueryParam("v2") @DefaultValue(" ") String v2, @QueryParam("v3") @DefaultValue(" ") String v3,
+			@QueryParam("v4") @DefaultValue(" ") String v4, @QueryParam("v5") @DefaultValue(" ") String v5,
+			@QueryParam("v6") @DefaultValue(" ") String v6, @QueryParam("v7") @DefaultValue(" ") String v7,
+			@QueryParam("v8") @DefaultValue(" ") String v8, @QueryParam("v9") @DefaultValue(" ") String v9) {
+
+
+		List<String> vocabs = new ArrayList<String>(10);
+		String[] vs = new String[] { v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 };
+		
+		for (int i = 0; i < 10; i++) {
+			if (vs[i] != null && !vs[i].isEmpty() && vs[i].startsWith("http")) {
+				vocabs.add(vs[i]);
+				// System.out.println(">> "+vs[i]);
+			}
+		}
+		
+		String ret = new String("");
+		List<String> list = datasetApi.listDatasetsByVocabs(vocabs);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/endpoints/{username}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listEndpointsByUser(@PathParam("username") String username) {
+		List<String> list = datasetApi.listEndpointsByUser(username);
+		String ret = new String("");
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/endpoints/vocabulary")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listEndpointsByVocab(@QueryParam("vocab") String vocab) {
+		String ret = new String("");
+		List<String> list = datasetApi.listEndpointsByVocab(vocab);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/endpoints/vocabularies")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listEndpointsByVocabs(
+		@QueryParam("v0") @DefaultValue(" ") String v0, @QueryParam("v1") @DefaultValue(" ") String v1,
+		@QueryParam("v2") @DefaultValue(" ") String v2, @QueryParam("v3") @DefaultValue(" ") String v3,
+		@QueryParam("v4") @DefaultValue(" ") String v4, @QueryParam("v5") @DefaultValue(" ") String v5,
+		@QueryParam("v6") @DefaultValue(" ") String v6, @QueryParam("v7") @DefaultValue(" ") String v7,
+		@QueryParam("v8") @DefaultValue(" ") String v8, @QueryParam("v9") @DefaultValue(" ") String v9) {
+	
+		List<String> vocabs = new ArrayList<String>(10);
+		String[] vs = new String[] { v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 };
+		
+		for (int i = 0; i < 10; i++) {
+			if (vs[i] != null && !vs[i].isEmpty() && vs[i].startsWith("http")) {
+				vocabs.add(vs[i]);
+				// System.out.println(">> "+vs[i]);
+			}
+		}
+	
+		String ret = new String("");
+		List<String> list = datasetApi.listEndpointsByVocabs(vocabs);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/listvocabularies")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listDatasetVocabs(@QueryParam("dataset") String dataset) {
+		String ret = new String("");
+		List<String> list = datasetApi.listDatasetVocabs(dataset);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/endpoint/listvocabularies")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response listEndpointVocabs(@QueryParam("endpoint") String endpoint) {
+		String ret = new String("");
+		List<String> list = datasetApi.listEndpointVocabs(endpoint);
+		Iterator<String> it = list.iterator();
+		while(it.hasNext()){
+			ret = ret.concat(it.next()+"\n");
+		}
+		return Response.status(200).entity(ret).build();
+	}
+
+	@GET
+	@Path("/property/get")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getProp(@QueryParam("dataset") String dataset, @QueryParam("prop") String prop) {
+		String ret = datasetApi.getProp(dataset, prop);
+		return Response.status(200).entity(ret).build();
+	}
+
+	@POST
+	@Path("/property/create")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response createProp(@Context HttpContext context, @QueryParam("dataset") String dataset, @QueryParam("prop") String prop, @QueryParam("value") String value) {
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			if(DataSetImpl.checkDataSetOfUser(dataset, creds[0]))
+				ret = datasetApi.createProp(dataset, prop, value);			 
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@PUT
+	@Path("/property/update")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response updateProp(@Context HttpContext context, @QueryParam("dataset") String dataset, @QueryParam("prop") String prop, @QueryParam("oldValue") String oldValue, @QueryParam("newValue") String newValue) {
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			if(DataSetImpl.checkDataSetOfUser(dataset, creds[0]))
+				ret = datasetApi.updateProp(dataset, prop, oldValue, newValue);
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+	
+	@DELETE
+	@Path("/property/delete")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response deleteProp(@Context HttpContext context, @QueryParam("dataset") String dataset, @QueryParam("prop") String prop, @QueryParam("value") String value) {
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			if(DataSetImpl.checkDataSetOfUser(dataset, creds[0]))
+				ret = datasetApi.deleteProp(dataset, prop, value);
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+	
+}

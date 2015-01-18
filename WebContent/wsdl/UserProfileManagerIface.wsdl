@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="UserProfileManagerIface" targetNamespace="http://model.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://model.aridus.uern.br/" schemaLocation="userprofilemanager_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="checkResponse">
+    <wsdl:part name="parameters" element="ns1:checkResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPropResponse">
+    <wsdl:part name="parameters" element="ns1:getPropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteResponse">
+    <wsdl:part name="parameters" element="ns1:deleteResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="check">
+    <wsdl:part name="parameters" element="ns1:check">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="delete">
+    <wsdl:part name="parameters" element="ns1:delete">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createResponse">
+    <wsdl:part name="parameters" element="ns1:createResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProp">
+    <wsdl:part name="parameters" element="ns1:getProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updatePropResponse">
+    <wsdl:part name="parameters" element="ns1:updatePropResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="create">
+    <wsdl:part name="parameters" element="ns1:create">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateProp">
+    <wsdl:part name="parameters" element="ns1:updateProp">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="UserProfileManagerIface">
+    <wsdl:operation name="updateProp">
+      <wsdl:input name="updateProp" message="ns1:updateProp">
+    </wsdl:input>
+      <wsdl:output name="updatePropResponse" message="ns1:updatePropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="create">
+      <wsdl:input name="create" message="ns1:create">
+    </wsdl:input>
+      <wsdl:output name="createResponse" message="ns1:createResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProp">
+      <wsdl:input name="getProp" message="ns1:getProp">
+    </wsdl:input>
+      <wsdl:output name="getPropResponse" message="ns1:getPropResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="check">
+      <wsdl:input name="check" message="ns1:check">
+    </wsdl:input>
+      <wsdl:output name="checkResponse" message="ns1:checkResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="delete">
+      <wsdl:input name="delete" message="ns1:delete">
+    </wsdl:input>
+      <wsdl:output name="deleteResponse" message="ns1:deleteResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://model.aridus.uern.br/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://model.aridus.uern.br/">
+  <xs:element name="execute1" type="tns:execute1"/>
+  <xs:element name="execute1Response" type="tns:execute1Response"/>
+  <xs:element name="execute2" type="tns:execute2"/>
+  <xs:element name="execute2Response" type="tns:execute2Response"/>
+  <xs:complexType name="execute2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="endpoints" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="execute2Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="execute1">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="query" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="execute1Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnsupportedQueryResultFormatException" type="tns:UnsupportedQueryResultFormatException"/>
+  <xs:complexType name="UnsupportedQueryResultFormatException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="IOException" type="tns:IOException"/>
+  <xs:complexType name="IOException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TupleQueryResultHandlerException" type="tns:TupleQueryResultHandlerException"/>
+  <xs:complexType name="TupleQueryResultHandlerException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QueryEvaluationException" type="tns:QueryEvaluationException"/>
+  <xs:complexType name="QueryEvaluationException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RepositoryException" type="tns:RepositoryException"/>
+  <xs:complexType name="RepositoryException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

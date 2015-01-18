@@ -1,0 +1,92 @@
+package br.uern.aridus.ws;
+
+import java.sql.SQLException;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import br.uern.aridus.sys.AAuthentication;
+import br.uern.aridus.sys.AUser;
+import br.uern.aridus.sys.AUserImpl;
+
+import com.sun.jersey.api.core.HttpContext;
+
+@Path("/user")
+public class UserProfileManager {
+	
+	private AUser userProfile;
+
+	public UserProfileManager() throws InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException {
+		userProfile = new AUserImpl();
+	}
+
+	@POST
+	@Path("/create")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response create(@FormParam("username") String username,
+			@FormParam("psswd") String psswd, @FormParam("email") String email,
+			@FormParam("uriprofile") String uriprofile) {
+		Long id = userProfile.create(username, psswd, email, uriprofile);
+		return Response.status(200).entity(id.toString()).build();
+	}
+
+	@DELETE
+	@Path("/delete")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response delete(@Context HttpContext context) {
+
+		Boolean ret = false;
+		if(AAuthentication.checkCredentials(context)>0){
+			String[] creds = AAuthentication.getCredentials(context);
+			ret = userProfile.delete(creds[0], creds[1]); 
+		} 
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@POST
+	@Path("/check")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response check(@FormParam("username") String username,
+			@FormParam("psswd") String psswd) {
+		Long ret = userProfile.check(username, psswd);
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@GET
+	@Path("{username}/{prop}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getProp(@Context HttpContext context, @PathParam("username") String username,
+			@PathParam("prop") String prop) {
+		String ret = "";
+		String[] creds = AAuthentication.getCredentials(context);
+		if(AAuthentication.checkCredentials(creds[0], creds[1])>0 && creds[0].equals(username)){
+			ret = userProfile.getProp(username, creds[1], prop);
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+
+	@PUT
+	@Path("{username}/{prop}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response updateProp(@Context HttpContext context, @PathParam("username") String username,
+			@PathParam("prop") String prop,	@QueryParam("value") String value) {
+		
+		Boolean ret = false;
+		String[] creds = AAuthentication.getCredentials(context);
+		if(AAuthentication.checkCredentials(creds[0], creds[1])>0 && creds[0].equals(username)){
+			ret = userProfile.updateProp(username, creds[1], prop, value);
+		}
+		return Response.status(200).entity(ret.toString()).build();
+	}
+}

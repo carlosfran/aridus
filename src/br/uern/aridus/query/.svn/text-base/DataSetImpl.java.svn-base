@@ -1,0 +1,729 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package br.uern.aridus.query;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.openrdf.query.BindingSet;
+import org.openrdf.query.BooleanQuery;
+import org.openrdf.query.MalformedQueryException;
+import org.openrdf.query.QueryEvaluationException;
+import org.openrdf.query.QueryLanguage;
+import org.openrdf.query.TupleQuery;
+import org.openrdf.query.TupleQueryResult;
+import org.openrdf.query.Update;
+import org.openrdf.query.UpdateExecutionException;
+import org.openrdf.repository.Repository;
+import org.openrdf.repository.RepositoryConnection;
+import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.http.HTTPRepository;
+
+/**
+ * 
+ * @author carlosfran
+ */
+public class DataSetImpl implements DataSet {
+
+	private final static long LIMIT = 10;
+	private final static long TRIPLES_MIN = 0;
+	private final static String VOID_ENDPOINT = "http://localhost:8080/openrdf-sesame/repositories/datasetkb";
+
+	Repository rep;
+	RepositoryConnection con;
+
+	public DataSetImpl() throws RepositoryException {
+		try {
+			rep = new HTTPRepository(VOID_ENDPOINT);
+			rep.initialize();
+			con = rep.getConnection();
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		}
+	}
+
+	private List<String> listDatasets(String query, List<String> voidEndpoints) {
+
+		List<String> datasets = new ArrayList<String>();
+		Repository rep;
+		RepositoryConnection con;
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		System.out.println("\n\nEndpoints:\n" + voidEndpoints + "\n\n");
+		for (String voidEndpoint : voidEndpoints) {
+
+			System.out.println(">> " + voidEndpoint);
+			try {
+				rep = new HTTPRepository(voidEndpoint);
+				rep.initialize();
+				con = rep.getConnection();
+				queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL,
+						query);
+				results = queryExecution.evaluate();
+				BindingSet bset;
+				while (results.hasNext()) {
+					bset = results.next();
+					String s = bset.getBinding("dataset").getValue().toString();
+					datasets.add(s);
+					Logger.getLogger(this.getClass()).info("Dataset: " + s);
+				}
+				Logger.getLogger(this.getClass()).info(
+						"Total de " + datasets.size() + " datasets.");
+				System.out.println("Total de endpoints : " + datasets.size());
+			} catch (RepositoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MalformedQueryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (QueryEvaluationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return datasets;
+	}
+
+	private List<String> listEndpoints(String query, List<String> voidEndpoints) {
+
+		List<String> endpoints = new ArrayList<String>();
+		Repository rep;
+		RepositoryConnection con;
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		System.out.println("\n\nEndpoints:\n" + voidEndpoints + "\n\n");
+		for (String voidEndpoint : voidEndpoints) {
+
+			System.out.println(">> " + voidEndpoint);
+			try {
+				rep = new HTTPRepository(voidEndpoint);
+				rep.initialize();
+				con = rep.getConnection();
+				queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL,
+						query);
+				results = queryExecution.evaluate();
+				BindingSet bset;
+				while (results.hasNext()) {
+					bset = results.next();
+					String s = bset.getBinding("endpoint").getValue().toString();
+
+					/*
+					 * if(s.charAt(s.length()-1) == '/') s = s.substring(0,
+					 * s.length()-1);
+					 */
+					// comment
+					if ( // Algumas problemas com o servidor VoID
+					s.charAt(s.length() - 1) != '/'
+							&& !s.equals("http://lsd.taxonconcept.org/sparql")
+							&& !s.equals("http://api.talis.com/stores/iand/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/bigdata/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/ngray-dev1/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/schema-cache/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/kwijibo-dev1/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/moseley/services/sparql")
+							&& !s.equals("http://api.talis.com/stores/moseley/services/sparql")
+							&& !s.equals("http://example.org/sparql")
+							&& !s.equals("http://rdf.myexperiment.org/sparql")
+							&& !s.equals("http://api.talis.com/stores/discogs/services/sparql")
+							&& !s.equals("http://linkeddata.ge.imati.cnr.it:2020/sparql")
+							&& !s.equals("http://api.talis.com/stores/xulu-dev4/services/sparql")
+							&& !s.equals("http://doc.metalex.eu:8000/sparql")) {
+						// s = s.substring(0, s.length()-1);
+						// comment
+						endpoints.add(s);
+						Logger.getLogger(this.getClass())
+								.info("Endpoint: " + s);
+					}
+				}
+				Logger.getLogger(this.getClass()).info(
+						"Total de " + endpoints.size() + " endpoints.");
+				System.out.println("Total de endpoints : " + endpoints.size());
+			} catch (RepositoryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MalformedQueryException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (QueryEvaluationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return endpoints;
+	}
+
+	private List<String> listVocabs(String query) {
+
+		List<String> vocabs = new ArrayList<String>();
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		try {
+			queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL, query);
+			results = queryExecution.evaluate();
+			BindingSet bset;
+			while (results.hasNext()) {
+				bset = results.next();
+				String s = bset.getBinding("vocabulary").getValue().toString();
+				vocabs.add(s);
+				Logger.getLogger(this.getClass()).info("Vocabulary: " + s);
+			}
+			Logger.getLogger(this.getClass()).info(
+					"Total de " + vocabs.size() + " vocabularies.");
+			System.out.println("Total de vocabularies : " + vocabs.size());
+		} catch (RepositoryException re) {
+			// TODO Auto-generated catch block
+			re.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			// TODO Auto-generated catch block
+			mqe.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			// TODO Auto-generated catch block
+			qee.printStackTrace();
+		}
+		return vocabs;
+	}
+
+	private List<String> listDatasets(String query) {
+
+		List<String> datasets = new ArrayList<String>();
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		try {
+			queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL, query);
+			results = queryExecution.evaluate();
+			BindingSet bset;
+			while (results.hasNext()) {
+				bset = results.next();
+				String s = bset.getBinding("dataset").getValue().toString();
+
+				datasets.add(s);
+				Logger.getLogger(this.getClass()).info("Dataset: " + s);
+			}
+			Logger.getLogger(this.getClass()).info(
+					"Total de " + datasets.size() + " datasets.");
+			System.out.println("Total de datasets : " + datasets.size());
+		} catch (RepositoryException re) {
+			// TODO Auto-generated catch block
+			re.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			// TODO Auto-generated catch block
+			mqe.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			// TODO Auto-generated catch block
+			qee.printStackTrace();
+		}
+		return datasets;
+	}
+
+	private List<String> listEndpoints(String query) {
+
+		List<String> endpoints = new ArrayList<String>();
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		try {
+			queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL, query);
+			results = queryExecution.evaluate();
+			BindingSet bset;
+			while (results.hasNext()) {
+				bset = results.next();
+				String s = bset.getBinding("endpoint").getValue().toString();
+
+				/*
+				 * if(s.charAt(s.length()-1) == '/') s = s.substring(0,
+				 * s.length()-1);
+				 */
+				// comment
+				if ( // Algumas problemas com o servidor VoID
+				s.charAt(s.length() - 1) != '/'
+						&& !s.equals("http://lsd.taxonconcept.org/sparql")
+						&& !s.equals("http://api.talis.com/stores/iand/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/bigdata/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/ngray-dev1/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/schema-cache/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/kwijibo-dev1/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/moseley/services/sparql")
+						&& !s.equals("http://api.talis.com/stores/moseley/services/sparql")
+						&& !s.equals("http://example.org/sparql")
+						&& !s.equals("http://rdf.myexperiment.org/sparql")
+						&& !s.equals("http://api.talis.com/stores/discogs/services/sparql")
+						&& !s.equals("http://linkeddata.ge.imati.cnr.it:2020/sparql")
+						&& !s.equals("http://api.talis.com/stores/xulu-dev4/services/sparql")
+						&& !s.equals("http://doc.metalex.eu:8000/sparql")) {
+					// s = s.substring(0, s.length()-1);
+					// comment
+					endpoints.add(s);
+					Logger.getLogger(this.getClass()).info("Endpoint: " + s);
+				}
+			}
+			Logger.getLogger(this.getClass()).info(
+					"Total de " + endpoints.size() + " endpoints.");
+			System.out.println("Total de endpoints : " + endpoints.size());
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+		} catch (MalformedQueryException e) {
+			e.printStackTrace();
+		} catch (QueryEvaluationException e) {
+			e.printStackTrace();
+		}
+		return endpoints;
+	}
+
+	private String makeQueryDatasets(List<String> vocabulary, long triples,
+			long limit) {
+		String queryPart1 = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?dataset \n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n"
+				+ "    ?dataset void:sparqlEndpoint ?endpoint .\n"
+				+ "    ?dataset void:vocabulary ?vocabulary .\n";
+		if (triples != TRIPLES_MIN) {
+			queryPart1 += "    ?dataset void:triples ?triples .\n ";
+			queryPart1 += "    FILTER(?triples >= " + triples + ").\n";
+		}
+
+		String queryPart2 = "} LIMIT " + limit;
+
+		// Montando Filtro da consulta
+		StringBuilder sb = new StringBuilder(queryPart1);
+		int listSize = vocabulary.size();
+
+		if (listSize > 0) {
+			sb.append("    FILTER(");
+			Iterator<String> i = vocabulary.iterator();
+			while (i.hasNext()) {
+				sb.append("?vocabulary = <" + i.next() + ">");
+				if (i.hasNext()) {
+					sb.append(" ||\n");
+				} else {
+					sb.append(")\n");
+				}
+			}
+		}
+		sb.append(queryPart2);
+		queryPart1 = sb.toString();
+		System.out.println("\n\n" + queryPart1 + "\n\n");
+		return queryPart1;
+	}
+
+	private String makeQueryEndpoints(List<String> vocabulary, long triples,
+			long limit) {
+
+		String queryPart1 = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?endpoint\n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n"
+				+ "    ?dataset void:sparqlEndpoint ?endpoint .\n"
+				+ "    ?dataset void:vocabulary ?vocabulary .\n";
+		if (triples != TRIPLES_MIN) {
+			queryPart1 += "    ?dataset void:triples ?triples .\n ";
+			queryPart1 += "    FILTER(?triples >= " + triples + ").\n";
+		}
+
+		String queryPart2 = "} LIMIT " + limit;
+
+		// Montando Filtro da consulta
+		StringBuilder sb = new StringBuilder(queryPart1);
+		int listSize = vocabulary.size();
+
+		if (listSize > 0) {
+			sb.append("    FILTER(");
+			Iterator<String> i = vocabulary.iterator();
+			while (i.hasNext()) {
+				sb.append("?vocabulary = <" + i.next() + ">");
+				if (i.hasNext()) {
+					sb.append(" ||\n");
+				} else {
+					sb.append(")\n");
+				}
+			}
+		}
+		sb.append(queryPart2);
+		queryPart1 = sb.toString();
+		System.out.println("\n\n" + queryPart1 + "\n\n");
+		return queryPart1;
+	}
+
+	public static String datasetURIGenerator(String username, String dtsetName) {
+		username = username.trim();
+		dtsetName = dtsetName.trim();
+		return "http://aridus.uern.br/" + username + "/dataset/" + dtsetName;
+	}
+	
+	public static boolean checkDataSetOfUser(String dtURI, String username){
+		if(dtURI.contains("http://aridus.uern.br/" + username + "/dataset/"))
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean create(String dtURI, String dtTitle, String dtDescription,
+			String dtHomepage, String dtSparqlEndpoint, long triples, List<String> vocabulary) {
+
+		Boolean ret = false;
+
+		String queryAsk = "ASK WHERE{ <" + dtURI + "> ?p ?o }";
+
+		try {
+			BooleanQuery ask = con.prepareBooleanQuery(QueryLanguage.SPARQL,
+					queryAsk);
+			Boolean bask = ask.evaluate();
+			if (!bask) {
+				String queryInsert = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+						+ "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n"
+						+ "PREFIX dcterms: <http://purl.org/dc/terms/>\n"
+						+ "PREFIX void: <http://rdfs.org/ns/void#>\n"
+						+ "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n"
+						+ "INSERT DATA{\n"
+						+ "\t<"
+						+ dtURI
+						+ "> rdf:type void:Dataset ;\n"
+						+ "\tfoaf:homepage <"
+						+ dtHomepage
+						+ "> ;\n"
+						+ "\tdcterms:title \""
+						+ dtTitle
+						+ "\" ;\n"
+						+ "\tdcterms:description \""
+						+ dtDescription
+						+ "\" ;\n"
+						+ "\tvoid:sparqlEndpoint <"
+						+ dtSparqlEndpoint + "> ;\n"
+						+ "\tvoid:triples \""+triples+"\"^^xsd:integer";
+				Iterator<String> it = vocabulary.iterator();
+				while (it.hasNext()) {
+					String v = it.next();
+					queryInsert = queryInsert.concat(";\n\tvoid:vocabulary <"
+							+ v + "> ");
+				}
+
+				queryInsert = queryInsert.concat(" .\n}");
+				String q = queryInsert;
+				System.out.println("\n" + q.toString() + "\n");
+
+				Update update = con.prepareUpdate(QueryLanguage.SPARQL,
+						queryInsert);
+				update.execute();
+				con.commit();
+				ret = true;
+			}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		} catch (UpdateExecutionException uee) {
+			uee.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		}
+
+		return ret;
+	}
+
+	@Override
+	public boolean delete(String dtURI) {
+		Boolean ret = false;
+		String queryAsk = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+							"ASK{ <" + dtURI + "> a void:Dataset }";
+//		System.out.println("\n"+queryAsk+"\n");
+
+		try {
+			BooleanQuery ask = con.prepareBooleanQuery(QueryLanguage.SPARQL,
+					queryAsk);
+			Boolean bask = ask.evaluate();
+			if (bask) {
+				String queryDelete = "DELETE DATA{ <"+dtURI+"> ?p ?o }";
+//				System.out.println("\n"+queryDelete+"\n");
+				Update update = con.prepareUpdate(QueryLanguage.SPARQL,queryDelete);
+				update.execute();
+				con.commit();
+				ret = true;
+			}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		} catch (UpdateExecutionException uee) {
+			uee.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
+	public List<String> listDatasetsByUser(String username) {
+		String query = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?dataset \n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n"
+				+ "    ?dataset void:sparqlEndpoint ?endpoint .\n"
+				+ "    ?dataset void:vocabulary ?vocabulary .\n"
+				+ "    ?dataset void:triples ?triples .\n "
+				+ "    FILTER(?triples >= " + TRIPLES_MIN + ").\n"
+				+ "    FILTER REGEX(str(?dataset), \"^http://aridus.uern.br/"
+				+ username + "/dataset/?\", \"i\")" + "} LIMIT " + LIMIT;
+
+		System.out.println(query);
+		return listDatasets(query);
+	}
+
+	@Override
+	public List<String> listDatasetsByVocab(String vocab) {
+		List<String> vocabs = new ArrayList<String>(1);
+		vocabs.add(vocab);
+		String query = makeQueryDatasets(vocabs, TRIPLES_MIN, LIMIT);
+		return listDatasets(query);
+	}
+
+	@Override
+	public List<String> listDatasetsByVocabs(List<String> vocabs) {
+		String query = makeQueryDatasets(vocabs, TRIPLES_MIN, LIMIT);
+		return listDatasets(query);
+	}
+
+	@Override
+	public List<String> listEndpointsByUser(String username) {
+		String query = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?endpoint \n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n"
+				+ "    ?dataset void:sparqlEndpoint ?endpoint .\n"
+				+ "    ?dataset void:vocabulary ?vocabulary .\n"
+				+ "    ?dataset void:triples ?triples .\n "
+				+ "    FILTER(?triples >= " + TRIPLES_MIN + ").\n"
+				+ "    FILTER REGEX(str(?dataset), \"^http://aridus.uern.br/"
+				+ username + "/dataset/?\", \"i\")" + "} LIMIT " + LIMIT;
+
+		System.out.println(query);
+		return listEndpoints(query);
+	}
+
+	@Override
+	public List<String> listEndpointsByVocab(String vocab) {
+		List<String> vocabs = new ArrayList<String>(1);
+		vocabs.add(vocab);
+		String query = makeQueryEndpoints(vocabs, TRIPLES_MIN, LIMIT);
+		return listEndpoints(query);
+	}
+
+	@Override
+	public List<String> listEndpointsByVocabs(List<String> vocabs) {
+		String query = makeQueryEndpoints(vocabs, TRIPLES_MIN, LIMIT);
+		return listEndpoints(query);
+	}
+
+	@Override
+	public List<String> listDatasetVocabs(String dataset) {
+		// lista os vocabs de um dataset
+		String query = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?vocabulary \n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n" + "    FILTER(?dataset = <"
+				+ dataset + ">) ."
+				+ "    ?dataset void:vocabulary ?vocabulary .\n" + "}";
+		System.out.println(query);
+		return listVocabs(query);
+	}
+
+	@Override
+	public List<String> listEndpointVocabs(String endpoint) {
+		String query = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+				+ "SELECT DISTINCT ?vocabulary \n" + "WHERE{"
+				+ "    ?dataset a void:Dataset .\n"
+				+ "    ?dataset void:sparqlEndpoint ?endpoint .\n"
+				+ "    FILTER(?endpoint = <" + endpoint + ">) ."
+				+ "    ?dataset void:vocabulary ?vocabulary .\n" + "}";
+		System.out.println(query);
+		return listVocabs(query);
+	}
+
+	@Override
+	public String getProp(String dataset, String prop) {
+		String value = "";
+		String PREFIXS = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+				"PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n";
+		
+		String query = PREFIXS + "SELECT DISTINCT ?prop \n" + "WHERE{ <" + dataset + "> ";
+		
+		if (prop.equals("vocabulary") || prop.equals("sparqlEndpoint") || prop.equals("triples")) {
+			query = query.concat(" void:"+prop+" ?prop }\n");
+		}else if(prop.equals("title") || prop.equals("description")){
+			query = query.concat(" dcterms:"+prop+" ?prop }\n");
+		}else if(prop.equals("homepage")){
+			query = query.concat(" foaf:"+prop+" ?prop }\n");
+		}
+		
+		System.out.println(query);
+
+		TupleQuery queryExecution;
+		TupleQueryResult results;
+
+		try {
+			queryExecution = con.prepareTupleQuery(QueryLanguage.SPARQL, query);
+			results = queryExecution.evaluate();
+			BindingSet bset;
+			while (results.hasNext()) {
+				bset = results.next();
+				value = bset.getBinding("prop").getValue().toString();
+			}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		}
+		return value;
+	}
+
+	@Override
+	public boolean createProp(String dataset, String prop, String value) {
+		boolean ret = false;
+		try {
+			String queryAsk = null;
+			String insert = null;
+				if (prop.equals("vocabulary")) {
+					insert = "PREFIX void: <http://rdfs.org/ns/void#>\n"
+							+ "INSERT DATA{<" + dataset + "> void:vocabulary <"
+							+ value + ">}";
+					queryAsk = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+							"ASK{ <" + dataset + "> a void:Dataset }";
+				} /*
+				 * else if(prop.equalsIgnoreCase("")){ }else
+				 * if(prop.equalsIgnoreCase("")){ }else
+				 * if(prop.equalsIgnoreCase("")){ }else
+				 * if(prop.equalsIgnoreCase("")){ }else
+				 * if(prop.equalsIgnoreCase("")){ }else
+				 * if(prop.equalsIgnoreCase("")){ }
+				 */
+				BooleanQuery ask = con.prepareBooleanQuery(QueryLanguage.SPARQL,
+						queryAsk);
+				Boolean bask = ask.evaluate();
+				if (bask) {
+					System.out.println(insert);
+					Update update = con.prepareUpdate(QueryLanguage.SPARQL, insert);
+					update.execute();
+					con.commit();
+					ret = true;
+				}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		} catch (UpdateExecutionException uee) {
+			uee.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
+	public boolean updateProp(String dataset, String prop, String oldValue, String newValue) {
+		boolean ret = false;
+		
+		String PREFIXS = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+				"PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n";
+		
+		String queryAsk = PREFIXS + "ASK{<" + dataset + "> a void:Dataset;\n";
+		String queryUpdate = PREFIXS;
+		
+		if (prop.equals("vocabulary") || prop.equals("sparqlEndpoint") || prop.equals("triples")) {
+			if(prop.equals("triples")){
+				queryAsk = queryAsk.concat("\tvoid:triples \""+oldValue+"\"^^xsd:integer }");
+				
+				queryUpdate = queryUpdate.concat("DELETE{ <"+dataset+"> void:triples \""+oldValue+"\"^^xsd:integer }\n");
+				queryUpdate = queryUpdate.concat("INSERT{ <"+dataset+"> void:triples \""+newValue+"\"^^xsd:integer }\n");
+				queryUpdate = queryUpdate.concat("WHERE{  <"+dataset+"> a void:Dataset }");
+			}else{
+				queryAsk = queryAsk.concat("\tvoid:"+prop+" <"+oldValue+"> }");
+				
+				queryUpdate = queryUpdate.concat("DELETE{ <"+dataset+"> void:"+prop+" <"+oldValue+">}\n");
+				queryUpdate = queryUpdate.concat("INSERT{ <"+dataset+"> void:"+prop+" <"+newValue+">}\n");
+				queryUpdate = queryUpdate.concat("WHERE{  <"+dataset+"> a void:Dataset }");
+			}
+		}else if(prop.equals("title") || prop.equals("description")){
+			queryAsk = queryAsk.concat("\tdcterms:"+prop+" \""+oldValue+"\" }");
+			
+			queryUpdate = queryUpdate.concat("DELETE{ <"+dataset+"> dcterms:"+prop+" \""+oldValue+"\" }\n");
+			queryUpdate = queryUpdate.concat("INSERT{ <"+dataset+"> dcterms:"+prop+" \""+newValue+"\" }\n");
+			queryUpdate = queryUpdate.concat("WHERE{  <"+dataset+"> a void:Dataset }");
+		}else if(prop.equals("homepage")){
+			queryAsk = queryAsk.concat("\tfoaf:homepage <"+oldValue+"> }");
+			
+			queryUpdate = queryUpdate.concat("DELETE{ <"+dataset+"> foaf:homepage <"+oldValue+"> } \n");
+			queryUpdate = queryUpdate.concat("INSERT{ <"+dataset+"> foaf:homepage <"+newValue+"> } \n");
+			queryUpdate = queryUpdate.concat("WHERE{  <"+dataset+"> a void:Dataset }");
+		}
+		
+//		System.out.println("\n"+queryUpdate+"\n");
+		
+		try {
+			BooleanQuery ask = con.prepareBooleanQuery(QueryLanguage.SPARQL, queryAsk);
+			Boolean bask = ask.evaluate();
+			if (bask) {
+				Update update = con.prepareUpdate(QueryLanguage.SPARQL, queryUpdate);
+				update.execute();
+				con.commit();
+				ret = true;
+			}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		} catch (UpdateExecutionException uee) {
+			uee.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		}
+		return ret;
+	}
+
+	@Override
+	public boolean deleteProp(String dataset, String prop, String value) {
+		
+		boolean ret = false;
+		
+		String PREFIXS = "PREFIX void: <http://rdfs.org/ns/void#>\n" +
+				"PREFIX dcterms: <http://purl.org/dc/terms/>\n" +
+				"PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" +
+				"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n";
+		
+		String queryAsk = PREFIXS + "ASK{<" + dataset + "> ";
+		String queryUpdate = PREFIXS;
+		
+		if (prop.equals("vocabulary")){
+			queryAsk = queryAsk.concat("void:vocabulary <"+value+"> }");
+			queryUpdate = queryUpdate.concat("DELETE DATA{ <"+dataset+"> void:vocabulary <"+value+"> }\n");
+		}
+		
+		try {
+			BooleanQuery ask = con.prepareBooleanQuery(QueryLanguage.SPARQL, queryAsk);
+			Boolean bask = ask.evaluate();
+			if (bask) {
+				Update update = con.prepareUpdate(QueryLanguage.SPARQL, queryUpdate);
+				update.execute();
+				con.commit();
+				ret = true;
+			}
+		} catch (RepositoryException re) {
+			re.printStackTrace();
+		} catch (QueryEvaluationException qee) {
+			qee.printStackTrace();
+		} catch (UpdateExecutionException uee) {
+			uee.printStackTrace();
+		} catch (MalformedQueryException mqe) {
+			mqe.printStackTrace();
+		}
+		return ret;
+	}
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="QueryRewritterIface" targetNamespace="http://model.aridus.uern.br/" xmlns:ns1="http://model.aridus.uern.br/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://model.aridus.uern.br/" schemaLocation="queryrewritter_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="queryRewritter3Response">
+    <wsdl:part name="parameters" element="ns1:queryRewritter3Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter1Response">
+    <wsdl:part name="parameters" element="ns1:queryRewritter1Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listVocabs">
+    <wsdl:part name="parameters" element="ns1:listVocabs">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listVocabsResponse">
+    <wsdl:part name="parameters" element="ns1:listVocabsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter4Response">
+    <wsdl:part name="parameters" element="ns1:queryRewritter4Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter4">
+    <wsdl:part name="parameters" element="ns1:queryRewritter4">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter1">
+    <wsdl:part name="parameters" element="ns1:queryRewritter1">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter2Response">
+    <wsdl:part name="parameters" element="ns1:queryRewritter2Response">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter3">
+    <wsdl:part name="parameters" element="ns1:queryRewritter3">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRewritter2">
+    <wsdl:part name="parameters" element="ns1:queryRewritter2">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="QueryRewritterIface">
+    <wsdl:operation name="queryRewritter4">
+      <wsdl:input name="queryRewritter4" message="ns1:queryRewritter4">
+    </wsdl:input>
+      <wsdl:output name="queryRewritter4Response" message="ns1:queryRewritter4Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter2">
+      <wsdl:input name="queryRewritter2" message="ns1:queryRewritter2">
+    </wsdl:input>
+      <wsdl:output name="queryRewritter2Response" message="ns1:queryRewritter2Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter3">
+      <wsdl:input name="queryRewritter3" message="ns1:queryRewritter3">
+    </wsdl:input>
+      <wsdl:output name="queryRewritter3Response" message="ns1:queryRewritter3Response">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listVocabs">
+      <wsdl:input name="listVocabs" message="ns1:listVocabs">
+    </wsdl:input>
+      <wsdl:output name="listVocabsResponse" message="ns1:listVocabsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRewritter1">
+      <wsdl:input name="queryRewritter1" message="ns1:queryRewritter1">
+    </wsdl:input>
+      <wsdl:output name="queryRewritter1Response" message="ns1:queryRewritter1Response">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
