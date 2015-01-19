@@ -30,10 +30,7 @@
 	<bean id="queryprocess"
 	     class="br.uern.aridus.ws.QueryProcess" />
 	<bean id="contentviewer"
-	     class="br.uern.aridus.ws.ContentViewer" />
-	<bean id="docbasemanager"
-	     class="br.uern.aridus.ws.DocBaseManager" />
-	
+	     class="br.uern.aridus.ws.ContentViewer" />	
 
 	<!-- Mapeamento dos endpoints WS -->	
 	<jaxrs:server id="userprofilemanagerrs" address="/rs/userprofile/">
@@ -189,21 +186,6 @@
 	<jaxrs:server id="contentviewerrs" address="/rs/contentviewer/">
 		<jaxrs:serviceBeans>
 			<ref bean="contentviewer" />
-		</jaxrs:serviceBeans>
-		<jaxrs:extensionMappings>
-			<entry key="xml" value="application/xml" />
-		</jaxrs:extensionMappings>
-		<!-- <jaxrs:inInterceptors>
-			<ref bean="securityRSInterceptor" />
-		</jaxrs:inInterceptors> -->
-		<jaxrs:features>
-			<bean class="org.apache.cxf.feature.LoggingFeature" />
-		</jaxrs:features>
-	</jaxrs:server>
-	
-	<jaxrs:server id="docbasemanagerrs" address="/rs/docbasemanager/">
-		<jaxrs:serviceBeans>
-			<ref bean="docbasemanager" />
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />

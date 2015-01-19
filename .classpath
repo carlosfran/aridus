@@ -138,7 +138,6 @@
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/sesame-sail-nativerdf-2.6.6.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/sesame-sail-rdbms-2.6.6.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/sesame-util-2.6.6.jar"/>
-	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/spring-aop-2.5.6.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/spring-beans-2.5.6.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/openrdf-sesame-2.6.6/spring-context-2.5.6.jar"/>
@@ -153,7 +152,6 @@
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/jena-iri-0.9.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/jena-tdb-0.9.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/log4j-1.2.16.jar"/>
-	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/slf4j-api-1.6.4.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/slf4j-log4j12-1.6.4.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/xercesImpl-2.10.0.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/apache-jena-2.7.1/xml-apis-1.4.01.jar"/>
@@ -166,31 +164,28 @@
 	<classpathentry kind="lib" path="/dados/libs/aridus-lib/fedx-1.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/aridus-lib/jersey-multipart-1.12.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/spring/spring-webmvc-3.0.7.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/dados/libs/jersey-1.12/lib/jackson-core-asl-1.9.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/jersey-1.12/lib/jackson-jaxrs-1.9.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/jersey-bundle-1.12.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/jersey-1.12/contribs/jersey-apache-client-1.12.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/standard.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
-	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/avro-1.7.5.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/commons-compress-1.5.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/dom4j-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/hibernate-commons-annotations-4.0.4.Final.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/hibernate-core-4.2.6.Final.jar"/>
-	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/jackson-core-asl-1.9.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/jackson-mapper-asl-1.9.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/javassist-3.15.0-GA.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/jboss-logging-3.1.3.GA.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/jboss-logging-annotations-1.2.0.Beta1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/lucene-core-3.6.2.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/paranamer-2.3.jar"/>
-	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/required/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/provided/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/provided/jms-1.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/provided/jsr250-api-1.0.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/provided/jta-1.1.jar"/>
 	<classpathentry kind="lib" path="/dados/libs/hibernate-search-4.4.0.Final/dist/lib/optional/hibernate-entitymanager-4.2.6.Final.jar"/>
+	<classpathentry kind="lib" path="/dados/workspace/ARIDUS/WebContent/WEB-INF/lib/jackson-core-asl-1.9.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

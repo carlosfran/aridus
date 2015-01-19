@@ -56,7 +56,7 @@ public class QueryExecutor implements QueryExecutorIface {
 			IOException, RepositoryException {
 		if (!FederationManager.isInitialized()) {
 			// Config.initialize();
-			Config.initialize("aridus-config/fedx.config");
+			Config.initialize("/dados/workspace/ARIDUS/aridus-config/fedx.config");
 			virtualRepository = FedXFactory
 					.initializeFederation(new ArrayList<Endpoint>());
 			fmg = FederationManager.getInstance();
@@ -65,7 +65,7 @@ public class QueryExecutor implements QueryExecutorIface {
 
 			// Configuration Void Dataset Endpoint
 			Properties prop = new Properties();
-			String locationProp = "aridus-config/VoIDEndpoints.properties";
+			String locationProp = "/dados/workspace/ARIDUS/aridus-config/VoIDEndpoints.properties";
 			FileInputStream fis = new FileInputStream(locationProp);
 			prop.load(fis);
 			Iterator<Object> ivoid = prop.values().iterator();

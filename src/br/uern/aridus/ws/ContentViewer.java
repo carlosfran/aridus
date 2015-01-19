@@ -28,7 +28,7 @@ public class ContentViewer {
 	public ContentViewer() throws FileNotFoundException, IOException{
 		config = new Properties();
 		config.load(new FileInputStream(
-				"aridus-config/ContentViewer.properties"));
+				"/dados/workspace/ARIDUS/aridus-config/ContentViewer.properties"));
 	}
 	
 	@GET

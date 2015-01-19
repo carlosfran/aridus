@@ -1,13 +1,14 @@
 package br.uern.aridus.sys;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import br.uern.aridus.model.UserProfile;
 
@@ -15,151 +16,82 @@ import br.uern.aridus.model.UserProfile;
 @SOAPBinding
 public class AUserImpl implements AUser {
 
-	private static Connection connection = null;
-	private static Statement statement = null;
-	private static ResultSet rs = null;
+	private static EntityManagerFactory emf;
+	private static EntityManager em;
 
 	public AUserImpl() throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException {
-		loadDriverConnection();
-	}
-	
-	private static void loadDriverConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
-		if(connection == null){
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost/aridusdb",
-					"root", "spy*32");
-		}
+		emf = Persistence.createEntityManagerFactory("ARIDUSDB");
+		em = emf.createEntityManager();
 	}
 
 	public long create(UserProfile user) {
-		
-		long key = 0;
-
-		if (!check(user.getEmail())) {
-			try {
-				statement = connection.createStatement();
-				String query = "INSERT INTO aridusdb.users (username, psswd, email, uriprofile)"
-						+ " VALUES('"
-						+ user.getUsername()
-						+ "', md5('"
-						+ user.getPsswd()
-						+ "'), '"
-						+ user.getEmail() + "', '" + user.getUriprofile() + "')";
-				statement.execute(query);
-				query = "SELECT userid FROM aridusdb.users "
-						+ "WHERE username='" + user.getUsername() + "'";
-				rs = statement.executeQuery(query);
-				if (rs.next()) {
-					key = rs.getLong(1);
-				}
-				// System.out.println(key);
-				rs.close();
-				statement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		Query query = em.createQuery("SELECT COUNT(*) as login "
+				+ "FROM UserProfile " + "WHERE username = :username");
+		query.setParameter("username", user.getUsername());
+		Long rs = (Long) query.getSingleResult();
+		if (rs == 0) {
+			em.getTransaction().begin();
+			em.persist(user);
+			em.getTransaction().commit();
+			return user.getUserid();
 		}
-		return key;
+		return 0L;
 	}
 
 	public boolean delete(String username, String psswd) {
 
 		boolean ret = false;
-		if (check(username, psswd)>0) {
-			try {
-				statement = connection.createStatement();
-				String delete = "DELETE FROM aridusdb.users "
-				+"WHERE username = '" + username + "'";
-//				System.out.println(delete);
-				long l = statement.executeUpdate(delete);
-				if (l > 0)
-					ret = true;
-				rs.close();
-				statement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		UserProfile user = new UserProfile();
+
+		user.setUsername(username);
+		user.setPsswd(psswd);
+
+		Long l = check(user.getUsername(), user.getPsswd());
+		if (l > 0) {
+			user = em.find(UserProfile.class, l);
+			em.getTransaction().begin();
+			em.remove(user);
+			em.getTransaction().commit();
+			ret = true;
 		}
 		return ret;
 	}
 
-	public boolean check(String username) {
-		boolean check = false;
-		try {
-			statement = connection.createStatement();
-			String query = "SELECT COUNT(*) as login " + "FROM users "
-					+ "WHERE username = '" + username + "'";
-			rs = statement.executeQuery(query);
-			if (rs.next()) {
-				if (rs.getInt(1) > 0)
-					check = true;
-			}
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return check;
-	}
-
-	public long check(String username, String psswd){
+	public long check(String username, String psswd) {
 		return AUserImpl.checkCredentials(username, psswd);
 	}
-	
+
 	public static long checkCredentials(String username, String psswd) {
-		long check = 0;
-		try {
-			if(connection == null) loadDriverConnection();
-			
-			statement = connection.createStatement();
-			String query = "SELECT userid as login " + "FROM aridusdb.users "
-					+ "WHERE username = '" + username + "' AND "
-					+ "psswd = md5('" + psswd + "')";
-//			System.out.println(query);
-			rs = statement.executeQuery(query);
-			if (rs.next()) {
-				check = rs.getLong(1);
-			}
-			rs.close();
-			statement.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return check;
+		UserProfile user = new UserProfile();
+		user.setUsername(username);
+		user.setPsswd(psswd);
+		Query query = em.createQuery("SELECT userid " + " FROM UserProfile "
+				+ "WHERE username = :username AND psswd= :psswd");
+		query.setParameter("username", user.getUsername());
+		query.setParameter("psswd", user.getPsswd());
+		List<Long> rs = (List<Long>) query.getResultList();
+		if (rs.isEmpty())
+			return 0L;
+		return rs.get(0);
 	}
 
 	public String getProp(String username, String psswd, String prop) {
 		String value = "";
-		if (check(username, psswd)>0 && !prop.equalsIgnoreCase("psswd")) {
-			try {
-				statement = connection.createStatement();
-				rs = statement.executeQuery("SELECT " + prop
-						+ " FROM aridusdb.users " + "WHERE username = '"
-						+ username + "'");
-				if (rs.next()) {
-					value = rs.getString(1);
-				}
-				rs.close();
-				statement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		UserProfile user = new UserProfile();
+		user.setPsswd(psswd);
+		user.setUsername(username);
+
+		if (check(username, psswd) > 0
+				&& !prop.equalsIgnoreCase("psswd")) {
+			Query query = em.createQuery("SELECT " + prop.toLowerCase()
+					+ " FROM UserProfile "
+					+ "WHERE username = :username AND psswd= :psswd");
+			query.setParameter("username", user.getUsername());
+			query.setParameter("psswd", user.getPsswd());
+			List<String> rs = (List<String>) query.getResultList();
+			if (rs != null && !rs.isEmpty())
+				value = rs.get(0).toString();
 		}
 		return value;
 	}
@@ -167,26 +99,21 @@ public class AUserImpl implements AUser {
 	public boolean updateProp(String username, String psswd, String prop,
 			String newValue) {
 		boolean ret = false;
-		if (check(username, psswd)>0 && !prop.equalsIgnoreCase("userid") && !prop.equalsIgnoreCase("username")) {
-			try {
-				statement = connection.createStatement();
-				if (prop.equalsIgnoreCase("psswd")) {
-					newValue = "md5('" + newValue + "')";
-				} else {
-					newValue = "'" + newValue + "'";
-				}
-				String update = "UPDATE aridusdb.users " + "SET " + prop + "="
-						+ newValue + " WHERE username = '" + username + "'";
-				// System.out.println(update);
-				long l = statement.executeUpdate(update);
-				if (l > 0)
-					ret = true;
-				rs.close();
-				statement.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		UserProfile user = new UserProfile();
+		user.setPsswd(psswd);
+		user.setUsername(username);
+
+		if (check(username, psswd) > 0
+				&& !prop.equalsIgnoreCase("psswd")) {
+			Query query = em.createQuery("UPDATE UserProfile "
+					+ "SET "+prop.toLowerCase()+"= :newvalue" +
+					" WHERE username = :username AND psswd= :psswd");
+			query.setParameter("username", user.getUsername());
+			query.setParameter("psswd", user.getPsswd());
+			query.setParameter("newvalue", newValue);
+			int i = query.executeUpdate();
+			if(i > 0)
+				ret = true;
 		}
 		return ret;
 	}
